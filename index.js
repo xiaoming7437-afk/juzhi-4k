@@ -15,7 +15,7 @@ const b64=b=>Buffer.from(b).toString('base64');
 const unb64=s=>Buffer.from(s,'base64');
 function pad(b){let n=16-b.length%16;return Buffer.concat([b,Buffer.alloc(n,n)]);}
 function unpad(b){let n=b[b.length-1];return n>0&&n<=16?b.subarray(0,b.length-n):b;}
-function aesEnc(key,data){let c=crypto.createCipheriv('aes-'+(key.length*8)+'-ecb',key,null);c.setAutoPadding(false);return Buffer.concat([c.update(pad(Buffer.from(data))),c.final()];}
+function aesEnc(key,data){let c=crypto.createCipheriv('aes-'+(key.length*8)+'-ecb',key,null);c.setAutoPadding(false);return Buffer.concat([c.update(pad(Buffer.from(data))),c.final()]);}
 function aesDec(key,data){let c=crypto.createDecipheriv('aes-'+(key.length*8)+'-ecb',key,null);c.setAutoPadding(false);return unpad(Buffer.concat([c.update(data),c.final()]));}
 const _e=b64(aesEnc(PW_SAFE,Buffer.from(CERT_MD5+'######'+CERT_SHA1+'~~~~~~'+PKG+'>>>+++'+VC)));
 const _e2=b64(Buffer.from(_e));
